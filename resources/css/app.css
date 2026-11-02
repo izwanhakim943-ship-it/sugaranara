@@ -1,12 +1,143 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/plus-jakarta-sans';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
-@source "../**/*.blade.php";
-@source "../**/*.js";
-@source "../**/*.vue";
+@source '../**/*.blade.php';
+@source '../**/*.js';
 
+/* =========================================================
+   SUGARANARA DESIGN TOKENS
+   ========================================================= */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Fonts */
+    --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+    /* Colours */
+    --color-cream: #fff4dc;
+    --color-ivory: #fffbf0;
+    --color-ink: #2a1b6b;
+    --color-forest: #1f4d3a;
+    --color-sage: #a9c4a0;
+    --color-terracotta: #d9663a;
+    --color-coral: #ff7a6b;
+    --color-mustard: #f2b63d;
+    --color-lagoon: #4fa6a0;
+    --color-lime: #bfe87a;
+
+    /* Solid "3D" shadows */
+    --shadow-solid: 4px 4px 0 0 #2a1b6b;
+    --shadow-solid-lg: 7px 7px 0 0 #2a1b6b;
+    --shadow-solid-sm: 2px 2px 0 0 #2a1b6b;
+
+    /* Radius */
+    --radius-card: 1.5rem;
+}
+
+/* =========================================================
+   BASE
+   ========================================================= */
+@layer base {
+    html {
+        font-family: var(--font-sans);
+        color: var(--color-ink);
+        background-color: var(--color-cream);
+    }
+
+    body {
+        min-height: 100vh;
+        background-color: var(--color-cream);
+        font-feature-settings: 'tnum' 1;
+    }
+
+    h1, h2, h3 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: -0.01em;
+    }
+}
+
+/* =========================================================
+   REUSABLE COMPONENT CLASSES
+   ========================================================= */
+@layer components {
+    /* Kad asas */
+    .card-sugar {
+        background-color: var(--color-ivory);
+        border: 3px solid var(--color-ink);
+        border-radius: var(--radius-card);
+        box-shadow: var(--shadow-solid);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-sugar-hover:hover {
+        transform: translate(-2px, -3px);
+        box-shadow: var(--shadow-solid-lg);
+    }
+
+    /* Butang */
+    .btn-sugar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.65rem 1.25rem;
+        font-weight: 700;
+        color: var(--color-ink);
+        background-color: var(--color-ivory);
+        border: 3px solid var(--color-ink);
+        border-radius: 999px;
+        box-shadow: var(--shadow-solid-sm);
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn-sugar:hover {
+        transform: translate(-1px, -2px);
+        box-shadow: var(--shadow-solid);
+    }
+    .btn-sugar:active {
+        transform: translate(2px, 2px);
+        box-shadow: 0 0 0 0 var(--color-ink);
+    }
+    .btn-primary { background-color: var(--color-terracotta); color: #fff; }
+    .btn-danger  { background-color: var(--color-coral); }
+    .btn-success { background-color: var(--color-lime); }
+
+    /* Progress bar */
+    .progress-track {
+        height: 1rem;
+        background-color: #fff;
+        border: 3px solid var(--color-ink);
+        border-radius: 999px;
+        overflow: hidden;
+    }
+    .progress-fill {
+        height: 100%;
+        border-radius: 999px;
+        background-color: var(--color-lime);
+        transform-origin: left;
+        animation: grow-bar 1s ease-out both;
+    }
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+@keyframes grow-bar {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+@keyframes float-soft {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+.float-soft {
+    animation: float-soft 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .progress-fill, .float-soft { animation: none; }
 }
